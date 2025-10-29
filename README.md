@@ -91,4 +91,4 @@ To deploy and interact with this smart contract, ensure you have the Soroban CLI
 
 ## Contract Details
 CBHNHY3QBXEACXXQ6RJLOUJGGXRDBWSEJKG4E7TSO6VAR6AUPSUCUIGN
-![alt text](<Screenshot 2025-10-29 at 3.16.04 PM.png>)
+![alt text](<image.png>)
