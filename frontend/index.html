@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellar Quiz - Quiz Platform</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">⭐ Stellar Quiz</h1>
+                <div class="user-info">
+                    <span class="user-address" id="userAddress">user_123...</span>
+                    <button class="admin-toggle" id="adminToggle">User Mode</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs" id="navTabs">
+            <button class="tab active" data-page="quizzes">Browse Quizzes</button>
+            <button class="tab" data-page="dashboard">Dashboard</button>
+            <button class="tab hidden" id="createTab" data-page="create">Create Quiz</button>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Content will be rendered here -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by Soroban Smart Contracts on Stellar Network</p>
+        </footer>
+    </div>
+
+    <!-- API Service -->
+    <script src="js/api.js"></script>
+    
+    <!-- Components -->
+    <script src="js/components.js"></script>
+    
+    <!-- Main App Logic -->
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,94 +1,245 @@
-# Decentralized Quiz App
+# Stellar Quiz Platform - Full Stack Web App
 
-## Project Title
-**Decentralized Quiz App - On-Chain Quiz Platform with Automated Rewards**
+A complete full-stack web application for managing and participating in quizzes with rewards, built on top of the Soroban smart contract from `contracts/hello-world/src/lib.rs`.
 
-## Project Description
-The Decentralized Quiz App is a blockchain-based quiz platform built on the Stellar network using Soroban smart contracts. This innovative application allows users to participate in quizzes where their scores are permanently recorded on the blockchain, ensuring transparency and immutability. The platform features an automated reward distribution system that incentivizes participation and rewards high performers based on their quiz performance.
+## Architecture
 
-The smart contract handles score submission, participant tracking, reward distribution, and maintains comprehensive statistics about quiz participation. All data is stored on-chain, providing a trustless and verifiable system for educational assessments and competitive quizzing.
+### Backend (Express.js)
+- RESTful API for quiz management
+- Quiz creation, submission, and scoring
+- Participant tracking and reward distribution
+- Real-time statistics
 
-## Project Vision
-Our vision is to revolutionize the online learning and assessment ecosystem by creating a transparent, fair, and rewarding quiz platform that leverages blockchain technology. We aim to:
+### Frontend (React + Vite)
+- Modern, responsive UI with Tailwind-like styling
+- Quiz browsing and discovery
+- Interactive quiz player
+- Admin panel for quiz creation
+- Dashboard with platform statistics
+- Mobile-friendly design
 
-- **Eliminate Cheating**: By recording scores on an immutable blockchain, we ensure data integrity and prevent score manipulation
-- **Automate Rewards**: Smart contracts automatically distribute rewards based on predefined criteria, removing intermediaries and ensuring fair compensation
-- **Create Trust**: Participants can verify their scores and reward distributions transparently on the blockchain
-- **Incentivize Learning**: By providing on-chain rewards, we motivate users to engage more deeply with educational content
-- **Build a Decentralized Education Ecosystem**: Enable educators, institutions, and content creators to host verifiable assessments without centralized control
+## Project Structure
 
-## Key Features
+```
+web-app/
+├── backend/
+│   ├── server.js          # Express server
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── components/    # React components
+│   │   │   ├── QuizList.jsx
+│   │   │   ├── QuizPlayer.jsx
+│   │   │   ├── QuizCreator.jsx
+│   │   │   └── Dashboard.jsx
+│   │   ├── services/
+│   │   │   └── api.js     # API client
+│   │   ├── App.jsx
+│   │   ├── App.css
+│   │   └── main.jsx
+│   ├── index.html
+│   ├── vite.config.js
+│   └── package.json
+├── package.json           # Monorepo config
+└── README.md
+```
 
-### 1. **On-Chain Score Recording**
-- Participants can submit their quiz scores directly to the blockchain
-- Each score submission includes participant address, quiz ID, score, and timestamp
-- All submissions are permanently recorded and verifiable
+## Installation
 
-### 2. **Automated Reward Distribution**
-- Smart contract-based reward system that distributes tokens automatically
-- Rewards can be distributed to participants based on their performance
-- Prevents double-rewarding with built-in reward status tracking
+### Prerequisites
+- Node.js 16+ and npm
+- Stellar testnet account (for future Soroban integration)
 
-### 3. **Participant Tracking**
-- Individual participant records stored with complete quiz history
-- View scores by participant address and quiz ID
-- Track reward status for each participant
+### Setup Instructions
 
-### 4. **Comprehensive Statistics**
-- Real-time tracking of total participants across all quizzes
-- Monitor total rewards distributed by the platform
-- Track the highest score achieved to identify top performers
+1. **Install dependencies**
+```bash
+cd /path/to/web-app
+npm install
+```
 
-### 5. **Secure Authentication**
-- Built-in address verification ensures only authorized participants can submit scores
-- Prevents unauthorized score submissions and manipulation
+This will install packages for both backend and frontend due to the monorepo setup.
 
-### 6. **Persistent Storage**
-- Extended Time-To-Live (TTL) settings ensure data persistence
-- Quiz records and statistics remain accessible for long-term verification
+2. **Start the backend server**
+```bash
+cd backend
+npm run dev
+# Server runs on http://localhost:5000
+```
 
-## Future Scope
+3. **In a new terminal, start the frontend dev server**
+```bash
+cd frontend
+npm run dev
+# App runs on http://localhost:3000
+```
 
-### Short-term Enhancements
-- **Multiple Quiz Categories**: Support for different quiz types (educational, trivia, skill assessment)
-- **Dynamic Reward Calculation**: Implement algorithms to calculate rewards based on score percentiles and difficulty levels
-- **Leaderboard System**: On-chain leaderboards to showcase top performers across different time periods
-- **Time-bound Quizzes**: Add quiz expiration and time limit features
+## Features
 
-### Medium-term Goals
-- **NFT Certificates**: Issue NFT-based certificates for quiz completion and achievement milestones
-- **Staking Mechanism**: Allow participants to stake tokens to participate in premium quizzes
-- **Multi-signature Admin Controls**: Implement multi-sig for quiz creation and reward pool management
-- **Quiz Creator Marketplace**: Enable educators to create and monetize their own quizzes
-- **Answer Verification**: Integrate decentralized oracle solutions for automated answer verification
+### User Features
+- **Browse Quizzes**: View all available quizzes with details
+- **Take Quizzes**: Interactive quiz interface with multiple-choice questions
+- **Track Progress**: Visual progress indicators while taking quizzes
+- **View Results**: Detailed score breakdown and reward eligibility
+- **Dashboard**: Platform statistics and overview
 
-### Long-term Vision
-- **Cross-chain Compatibility**: Expand to other blockchain networks for wider accessibility
-- **AI Integration**: Implement AI-powered question generation and difficulty adjustment
-- **Decentralized Governance**: DAO structure for platform decisions and reward pool allocation
-- **Integration with Educational Institutions**: Partner with schools and universities for certified assessments
-- **Mobile dApp**: Develop native mobile applications for iOS and Android
-- **Social Features**: Add peer-to-peer challenges, study groups, and collaborative learning features
-- **Token Economics**: Launch platform-native token with utility and governance features
-- **Analytics Dashboard**: Comprehensive analytics for participants to track learning progress and performance trends
+### Admin Features (Toggle "Admin Mode")
+- **Create Quizzes**: Add new quizzes with multiple questions
+- **Manage Questions**: Edit and remove questions before publishing
+- **Set Rewards**: Define reward pools and passing scores
+- **Toggle Status**: Activate/deactivate quizzes
+- **View Analytics**: Monitor platform statistics
+
+## API Endpoints
+
+### Quizzes
+- `GET /api/quizzes` - Get all quizzes
+- `GET /api/quizzes/:quizId` - Get specific quiz
+- `POST /api/quizzes` - Create new quiz
+- `PATCH /api/quizzes/:quizId/status` - Toggle quiz status
+
+### Quiz Participation
+- `POST /api/quizzes/:quizId/play` - Submit quiz answers
+- `GET /api/participants/:address/quiz/:quizId` - Get participant score
+
+### Statistics
+- `GET /api/stats` - Get platform statistics
+
+### Rewards
+- `POST /api/rewards/distribute` - Distribute rewards (admin)
+
+## Connecting to Soroban Smart Contract
+
+To integrate with the actual Soroban smart contract:
+
+1. **Install Stellar SDK**
+```bash
+npm install @stellar/js-sdk soroban-client
+```
+
+2. **Update backend `server.js`** to call contract methods:
+```javascript
+import { Keypair, Networks, TransactionBuilder } from '@stellar/js-sdk';
+import { Soroban } from 'soroban-client';
+
+// Initialize contract connection
+const sorobanServer = new Soroban.Server(SOROBAN_RPC_URL);
+const contractId = 'YOUR_CONTRACT_ID';
+
+// Example: Submit quiz to contract
+app.post('/api/quizzes/:quizId/play', async (req, res) => {
+  const { participant, answers } = req.body;
+  
+  // Call contract's play_quiz function
+  const tx = await sorobanServer.submitTransaction(
+    QuizContract.playQuiz(participant, quizId, answers)
+  );
+  
+  // Process result...
+});
+```
+
+3. **Update frontend `api.js`** for contract interactions
+
+4. **Implement wallet connection** for authentication
+
+## Development
+
+### Frontend Development
+- Uses React 18 with Hooks
+- Vite for fast development
+- Responsive CSS Grid/Flexbox layout
+- Mobile-first design approach
+
+### Backend Development
+- Express.js middleware pattern
+- In-memory data store (replace with database for production)
+- CORS enabled for frontend communication
+- Error handling and validation
+
+### Running Tests
+```bash
+# Backend (when tests are added)
+cd backend
+npm run test
+
+# Frontend (when tests are added)
+cd frontend
+npm run test
+```
+
+## Building for Production
+
+### Frontend Build
+```bash
+cd frontend
+npm run build
+# Creates optimized build in dist/
+```
+
+### Backend Production
+```bash
+cd backend
+NODE_ENV=production npm start
+```
+
+### Deploy
+- Backend: Deploy to Node.js hosting (Heroku, Railway, Render, etc.)
+- Frontend: Deploy to CDN (Vercel, Netlify, GitHub Pages, etc.)
+
+## Environment Variables
+
+### Backend (.env)
+```
+PORT=5000
+NODE_ENV=development
+SOROBAN_RPC_URL=https://soroban-testnet.stellar.org
+NETWORK_PASSPHRASE=Test SDF Network ; September 2015
+```
+
+### Frontend (.env)
+```
+VITE_API_URL=http://localhost:5000
+VITE_SOROBAN_NETWORK=testnet
+```
+
+## Future Enhancements
+
+- [ ] Real Soroban contract integration
+- [ ] Wallet authentication (Freighter, Stellar Lab)
+- [ ] PostgreSQL/MongoDB database
+- [ ] User accounts and progress tracking
+- [ ] Leaderboards
+- [ ] Token/NFT rewards
+- [ ] Quiz categories and difficulty levels
+- [ ] Question bank management
+- [ ] Export results as certificates
+- [ ] Advanced analytics
+
+## Technology Stack
+
+**Frontend:**
+- React 18
+- Vite
+- Axios
+- CSS Grid/Flexbox
+
+**Backend:**
+- Node.js
+- Express.js
+- CORS
+
+**Blockchain:**
+- Stellar/Soroban (pending integration)
+
+## License
+
+MIT
+
+## Support
+
+For issues or questions, please open an issue in the repository.
 
 ---
 
-## Technical Stack
-- **Blockchain**: Stellar Network
-- **Smart Contract Framework**: Soroban SDK
-- **Language**: Rust
-- **Storage**: On-chain persistent storage with extended TTL
-
-## Getting Started
-To deploy and interact with this smart contract, ensure you have the Soroban CLI and Rust toolchain installed. Refer to the [Soroban documentation](https://soroban.stellar.org/docs) for detailed setup instructions.
-
----
-
-**License**: MIT  
-**Status**: Development Phase  
-**Contributions**: Open to community contributions and feedback
-
-## Contract Details
-CBHNHY3QBXEACXXQ6RJLOUJGGXRDBWSEJKG4E7TSO6VAR6AUPSUCUIGN
-![alt text](<image.png>)
+**Built with ⭐ for the Stellar Network**
